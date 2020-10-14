@@ -21,7 +21,6 @@ import {
 import "pure-react-carousel/dist/react-carousel.es.css";
 import CustomCard from "./shared/Card";
 import Axios from "axios";
-import useDeviceDetect from "./shared/useDeviceDetect";
 import { useRouter } from "next/router";
 
 function Home({ fetched_products }) {
@@ -40,8 +39,6 @@ function Home({ fetched_products }) {
       setProduct(filter_product);
     }
   }, [filter]);
-
-  const { isMobile } = useDeviceDetect();
 
   return (
     <Container fluid>
@@ -90,110 +87,34 @@ function Home({ fetched_products }) {
           </Row>
         </Col>
       </Row>
-      {isMobile ? (
-        <CarouselProvider
-          naturalSlideWidth={100}
-          naturalSlideHeight={50}
-          totalSlides={3}
-        >
-          <div
-            style={{
-              position: "absolute",
-              zIndex: 99,
-              marginTop: "85px",
-              left: "-10px",
-            }}
-          >
-            <ButtonBack
-              style={{
-                backgroundColor: "#fff",
-                border: "0px",
-                borderRadius: "50%",
-                height: "30px",
-                width: "30px",
-                boxShadow: "0px 0px 1px 1px #eaeaea",
-              }}
-            >
-              {"<"}
-            </ButtonBack>
-          </div>
 
-          <div
-            style={{
-              position: "absolute",
-              right: "-10px",
-              zIndex: 99,
-              marginTop: "85px",
-            }}
-          >
-            <ButtonNext
-              style={{
-                backgroundColor: "#fff",
-                border: "0px",
-                borderRadius: "50%",
-                height: "30px",
-                width: "30px",
-                boxShadow: "0px 0px 1px 1px #eaeaea",
-              }}
-            >
-              {">"}
-            </ButtonNext>
-          </div>
-          <Slider>
-            <Slide index={0}>
-              <CustomCard
-                title="Gift Voucher"
-                color="#e286c6"
-                desc="With persona care items"
-                button="Shop Coupons"
-              />
-            </Slide>
-            <Slide index={1}>
-              <CustomCard
-                title="Gift Voucher"
-                color="#f69081"
-                desc="Up to 40% off everyday"
-                button="Shop Coupons"
-              />
-            </Slide>
-            <Slide index={2}>
-              <CustomCard
-                title="Gift Voucher"
-                color="#fdb06c"
-                desc="With selected items"
-                button="Save Now"
-              />
-            </Slide>
-          </Slider>
-        </CarouselProvider>
-      ) : (
-        <Row style={{ padding: "20px 0px", borderBottom: "2px solid #f7f7f7" }}>
-          <Col>
-            <CustomCard
-              title="Gift Voucher"
-              color="#e286c6"
-              desc="With persona care items"
-              button="Shop Coupons"
-            />
-          </Col>
-          <Col>
-            <CustomCard
-              title="Gift Voucher"
-              color="#f69081"
-              desc="Up to 40% off everyday"
-              button="Shop Coupons"
-            />
-          </Col>
-          <Col>
-            <CustomCard
-              title="Gift Voucher"
-              color="#fdb06c"
-              desc="With selected items"
-              button="Save Now"
-            />
-          </Col>
-        </Row>
-      )}
+      <Row style={{ padding: "20px 0px", borderBottom: "2px solid #f7f7f7" }}>
+        <Col>
+          <CustomCard
+            title="Gift Voucher"
+            color="#e286c6"
+            desc="With persona care items"
+            button="Shop Coupons"
+          />
+        </Col>
+        <Col>
+          <CustomCard
+            title="Gift Voucher"
+            color="#f69081"
+            desc="Up to 40% off everyday"
+            button="Shop Coupons"
+          />
+        </Col>
+        <Col>
+          <CustomCard
+            title="Gift Voucher"
+            color="#fdb06c"
+            desc="With selected items"
+            button="Save Now"
+          />
+        </Col>
+      </Row>
+
       <Row>
         <Col style={{ padding: "20px 10px" }}>
           <div className={styles.sticky}>
