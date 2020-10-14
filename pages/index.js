@@ -21,12 +21,12 @@ import CustomCard from "./shared/Card";
 import Axios from "axios";
 import useDeviceDetect from "./shared/useDeviceDetect";
 import { useRouter } from "next/router";
+import MyVerticallyCenteredModal from "./shared/MyVerticallyCenteredModal";
 
 function Home({ fetched_products }) {
   const router = useRouter();
   const [product, setProduct] = useState(fetched_products);
   const [modalShow, setModalShow] = useState(false);
-  const [test, setTest] = useState(fetched_products);
   const [selectedProduct, setSelectedProduct] = useState({});
   const [filter, setFilter] = useState("");
   const [products, setProducts] = useState(fetched_products);
