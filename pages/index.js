@@ -1,10 +1,12 @@
 import {
   Accordion,
+  Button,
   Card,
   CardColumns,
   Col,
   Container,
   Form,
+  Modal,
   Row,
 } from "react-bootstrap";
 import styles from "../styles/Home.module.css";
@@ -21,7 +23,6 @@ import CustomCard from "./shared/Card";
 import Axios from "axios";
 import useDeviceDetect from "./shared/useDeviceDetect";
 import { useRouter } from "next/router";
-import MyVerticallyCenteredModal from "./shared/MyVerticallyCenteredModal";
 
 function Home({ fetched_products }) {
   const router = useRouter();
@@ -307,11 +308,49 @@ function Home({ fetched_products }) {
         </Col>
       </Row>
       {Object.keys(selectedProduct).length !== 0 && (
-        <MyVerticallyCenteredModal
+        <Modal
           show={modalShow}
           onHide={() => setModalShow(false)}
-          product={selectedProduct}
-        />
+          size="lg"
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+        >
+          <Modal.Header closeButton>
+            <Modal.Title id="contained-modal-title-vcenter">
+              {selectedProduct.brand} {selectedProduct.product_name}
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <p>Description</p>
+            <div>Color:</div>
+            <div style={{ display: "flex" }}>
+              {selectedProduct.colour.split(",").map((e, i) => (
+                <div
+                  style={{
+                    backgroundColor: "#f7f7f7",
+                    borderRadius: "10px",
+                    padding: "5px",
+                    margin: "10px",
+                  }}
+                  key={i}
+                >
+                  <b>{e}</b>
+                </div>
+              ))}
+            </div>
+            <h5 style={{ color: "#009374" }}>
+              {selectedProduct.product_price}
+            </h5>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button
+              style={{ backgroundColor: "#009374" }}
+              onClick={() => setModalShow(false)}
+            >
+              Cart
+            </Button>
+          </Modal.Footer>
+        </Modal>
       )}
     </Container>
   );
