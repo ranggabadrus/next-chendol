@@ -22,7 +22,7 @@ import Axios from "axios";
 import useDeviceDetect from "./shared/useDeviceDetect";
 import useWindowDimensions from "./shared/useDeviceDetect";
 
-export default function Home() {
+function Home({ fetched_products }) {
   const [product, setProduct] = useState([]);
   const [modalShow, setModalShow] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState({});
@@ -32,10 +32,8 @@ export default function Home() {
 
   useEffect(() => {
     const getProduct = async () => {
-      const res = await Axios.get(`https://users.chendol.com/api/v1/products`);
-      setProduct(res.data.products);
-      setProducts(res.data.products);
-      console.log("res ", res);
+      setProduct(fetched_products);
+      setProducts(fetched_products);
       setLoading(false);
     };
 
@@ -43,16 +41,14 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    console.log("filter ", filter);
-
     if (filter === "") {
       setProduct(products);
     } else {
       let filter_product = products.filter((e) => e.brand === filter);
       setProduct(filter_product);
-      console.log("filtered");
     }
   }, [filter]);
+
   const { isMobile } = useDeviceDetect();
 
   if (loading) {
@@ -214,18 +210,7 @@ export default function Home() {
         <Row>
           <Col style={{ padding: "20px 10px" }}>
             <div className={styles.sticky}>
-              <Accordion defaultActiveKey="0">
-                <Card>
-                  <Accordion.Toggle as={Card.Header} eventKey="0">
-                    Prices
-                  </Accordion.Toggle>
-                  <Accordion.Collapse eventKey="0">
-                    <Card.Body>
-                      <div>Cheapest</div>
-                      <div>Expensive</div>
-                    </Card.Body>
-                  </Accordion.Collapse>
-                </Card>
+              <Accordion>
                 <Card>
                   <Accordion.Toggle as={Card.Header} eventKey="1">
                     Brands
@@ -285,6 +270,18 @@ export default function Home() {
                     </Card.Body>
                   </Accordion.Collapse>
                 </Card>
+
+                <Card>
+                  <Accordion.Toggle as={Card.Header} eventKey="0">
+                    Prices (Not work yet)
+                  </Accordion.Toggle>
+                  <Accordion.Collapse eventKey="0">
+                    <Card.Body>
+                      <div>Cheapest</div>
+                      <div>Expensive</div>
+                    </Card.Body>
+                  </Accordion.Collapse>
+                </Card>
               </Accordion>
             </div>
           </Col>
@@ -336,3 +333,11 @@ export default function Home() {
     );
   }
 }
+
+Home.getInitialProps = async (ctx) => {
+  const res = await Axios.get(`https://users.chendol.com/api/v1/products`);
+  console.log("json ", res);
+  return { fetched_products: res.data.products };
+};
+
+export default Home;
