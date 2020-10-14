@@ -19,8 +19,8 @@ import {
 import "pure-react-carousel/dist/react-carousel.es.css";
 import CustomCard from "./shared/Card";
 import Axios from "axios";
-import MyVerticallyCenteredModal from "./shared/MyVerticallyCenteredModal";
-import useWindowDimensions from "./shared/useWindowDimension";
+import useDeviceDetect from "./shared/useDeviceDetect";
+import useWindowDimensions from "./shared/useDeviceDetect";
 
 export default function Home() {
   const [product, setProduct] = useState([]);
@@ -53,8 +53,8 @@ export default function Home() {
       console.log("filtered");
     }
   }, [filter]);
-  const { height, width } = useWindowDimensions();
-  console.log("width ", width);
+  const { isMobile } = useDeviceDetect();
+
   if (loading) {
     return <div>Loading</div>;
   } else {
@@ -105,7 +105,7 @@ export default function Home() {
             </Row>
           </Col>
         </Row>
-        {width <= 425 ? (
+        {isMobile ? (
           <CarouselProvider
             naturalSlideWidth={100}
             naturalSlideHeight={50}
